@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div v-html="title"></div>
+  <ul>
+    <li v-for="(artist, index) in artists" :key="index"> {{ artist.name }}</li>
+  </ul>
+  <form @submit.prevent="addArtist">
+    <input type="text" v-model.trim="newArtist" placeholder="Add new artist">
+    <button type="submit">Add artist</button>
+  </form>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  methods: {
+    addArtist() {
+      if(this.newArtist != '') {
+        this.artists.push({ name: this.newArtist })
+        this.newArtist = ''
+      }
+    }
+  },
+  data() {
+    return {
+      title: "<h1>List of artist</h1>",
+      artists: [
+        { name: '2pac' },
+        { name: 'Drake' },
+        { name: 'Bob Marley' },
+        { name: 'PNL' },
+        { name: 'Céline Dion' }
+      ],
+      newArtist: ''
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 </style>
